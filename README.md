@@ -13,7 +13,7 @@ The code is intended to be usable independently of the paper experiments: you ca
 ## What is (and is not) included
 
 - ✅ **Included (ours):** DAGFS implementation (`src/`) and scripts to run DAGFS and evaluate rankings (`scripts/`).
-- ❌ **Not included:** datasets, third‑party baselines, and all generated result folders. 
+- ❌ **Not included:** datasets and third‑party baselines. 
 
 ## Installation
 

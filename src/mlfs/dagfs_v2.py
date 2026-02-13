@@ -68,8 +68,19 @@ class DAGFSv2Params:
 def _build_C_directed(S_base: np.ndarray, freq: np.ndarray, tau: float, topK: int, epsv: float) -> np.ndarray:
     L = int(S_base.shape[0])
     # Reliability bias: prefer transfer from higher-support labels (teachers) to
-    # lower-support labels (students). With row-stochastic normalization, this
-    # corresponds to scaling outgoing weights by (f_row / f_col)^tau.
+    # lower-support labels (students).
+    #
+    # IMPORTANT indexing convention (to avoid sign/transpose confusions):
+    #   - C is stored as an L×L matrix and is row-stochastic (rows sum to 1).
+    #   - In the regularizer ||W(I-C)||_F^2, the ℓ-th column is:
+    #         (W(I-C))_{:ℓ} = w_ℓ - Σ_m w_m * C_{mℓ},
+    #     so C_{mℓ} controls how much the predictor of label m contributes to
+    #     (i.e., transfers into) the predictor of label ℓ. In other words,
+    #     **row m acts as teacher/source**, **column ℓ is the student/target**.
+    #
+    # With this convention, to bias transfer head→tail (teacher=head, student=tail),
+    # we upweight C_{mℓ} when f_m > f_ℓ by multiplying similarities by
+    #   (f_row / f_col)^tau  with tau > 0.
     ratio = np.outer(freq, np.ones(L)) / np.outer(np.ones(L), freq)
     ratio = np.nan_to_num(ratio, nan=1.0, posinf=1.0, neginf=1.0)
     B = ratio ** float(tau)
