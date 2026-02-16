@@ -1,7 +1,7 @@
-# DAGFS — Directed Additive Graph Feature Selection (Multi-label FS)
+# D2GFS: Directed Dual-evidence Graph Feature Selection (Multi-label FS)
 
-This repository contains the reference Python implementation of **DAGFS**, an embedded method for **multi-label feature selection (MLFS)**.
-At a high level, DAGFS produces a **single feature ranking per training fold** by combining:
+This repository contains the reference Python implementation of **D2GFS**, an embedded method for **multi-label feature selection (MLFS)**.
+At a high level, D2GFS produces a **single feature ranking per training fold** by combining:
 
 - a **nonnegative reconstruction** template with group sparsity (stable multiplicative updates),
 - a **signed-deviation feature lift** to represent *two-sided evidence* under nonnegativity,
@@ -26,7 +26,7 @@ python3 -m pip install -U pip
 python3 -m pip install -e ".[experiments]"
 ```
 
-Core DAGFS only requires NumPy. The `experiments` extra installs the scientific stack used by the provided scripts.
+Core D2GFS only requires NumPy. The `experiments` extra installs the scientific stack used by the provided scripts.
 
 ## Quickstart (API)
 
